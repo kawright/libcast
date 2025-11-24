@@ -9,16 +9,20 @@ CC := gcc
 CC_OPTS := \
 	-Wall \
 	-Werror \
-	-fpic
+	-fpic \
+	-g
+
+CC_LIBS := \
+	-lerr
 
 # ----- REAL TARGETS -----
 
 build/lib/libcast.so: build/obj/cast.o
 	@mkdir -p build/lib
-	@${CC} -shared -o $@ $<
+	@${CC} -shared -o $@ $< ${CC_LIBS}
 	@echo "Built target $@"
 
-build/obj/cast.o: cast.c cast.h
+build/obj/cast.o: cast.c cast.h Makefile
 	@mkdir -p build/obj
 	@${CC} ${CC_OPTS} -c -o $@ $<
 	@echo "Built target $@"
